@@ -500,6 +500,26 @@ export class ApiServer {
       res.sendStatus(200);
     }));
 
+    this._app.post('/api/users/:userId/disable', expressWrap(async (req, res) => {
+      const isAuthorized = await this._gristServer.getInstallAdmin().isAdminReq(req);
+      if (!isAuthorized) {
+        throw new ApiError('Only admin users can disable users', 401);
+      }
+      const targetUserId = integerParam(req.params.userId, 'userId');
+      await this._dbManager.updateUser(targetUserId, {disabledAt: new Date()});
+      res.sendStatus(200);
+    }));
+
+    this._app.post('/api/users/:userId/enable', expressWrap(async (req, res) => {
+      const isAuthorized = await this._gristServer.getInstallAdmin().isAdminReq(req);
+      if (!isAuthorized) {
+        throw new ApiError('Only admin users can enable users', 401);
+      }
+      const targetUserId = integerParam(req.params.userId, 'userId');
+      await this._dbManager.updateUser(targetUserId, {disabledAt: null});
+      res.sendStatus(200);
+    }));
+
     // GET /api/profile/apikey
     // Get user's apiKey
     this._app.get('/api/profile/apikey', expressWrap(async (req, res) => {
