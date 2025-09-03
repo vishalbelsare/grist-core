@@ -298,19 +298,21 @@ describe('Authorizer', function() {
     let resp = await axios.get(`${serverUrl}/o/pr/${docId}`, chimpy);
     assert.equal(resp.status, 200, 'bananas first acquired');
 
-    // But, oh no! Chimpy has been getting too greedy with the bananas,
-    // so down comes the banhammer!
     const sadChimpy = await dbManager.getUserByLogin('chimpy@getgrist.com');
-    sadChimpy.disabledAt = new Date();
-    await sadChimpy.save();
+    try {
+      // But, oh no! Chimpy has been getting too greedy with the bananas,
+      // so down comes the banhammer!
+      sadChimpy.disabledAt = new Date();
+      await sadChimpy.save();
 
-    // No more bananas!
-    resp = await axios.get(`${serverUrl}/o/pr/${docId}`, chimpy);
-    assert.equal(resp.status, 403, 'bananas denied!');
-
-    // It's okay, chimpy, you learned your lesson
-    sadChimpy.disabledAt = null;
-    await sadChimpy.save();
+      // No more bananas!
+      resp = await axios.get(`${serverUrl}/o/pr/${docId}`, chimpy);
+      assert.equal(resp.status, 403, 'bananas denied!');
+    } finally {
+      // It's okay, chimpy, you learned your lesson
+      sadChimpy.disabledAt = null;
+      await sadChimpy.save();
+    }
 
     // You can have your bananas back
     resp = await axios.get(`${serverUrl}/o/pr/${docId}`, chimpy);
