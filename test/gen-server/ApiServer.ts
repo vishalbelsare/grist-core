@@ -1104,41 +1104,47 @@ describe('ApiServer', function() {
     assert.equal(resp.status, 403);
   });
 
-  it('GET /api/docs/{did} returns 403 for disabled users', async function() {
-    const did = await dbManager.testGetId('Jupiter');
+  it('GET /api/docs/{did} returns 403 for disabled users', async function () {
+    const chimpyUser = await dbManager.getUserByLogin(chimpyEmail);
+    const chimpyId = chimpyUser.id;
+    try {
+      const did = await dbManager.testGetId('Jupiter');
 
-    // Chimpy has access at first.
-    let resp = await axios.get(`${homeUrl}/api/docs/${did}`, chimpy);
-    assert.equal(resp.status, 200);
+      // Chimpy has access at first.
+      let resp = await axios.get(`${homeUrl}/api/docs/${did}`, chimpy);
+      assert.equal(resp.status, 200);
 
-    // Then chimpy misbehaves. So, kiwi tries to ban chimpy...
-    const chimpyId = (await dbManager.getUserByLogin(chimpyEmail)).id;
-    resp = await axios.post(`${homeUrl}/api/users/${chimpyId}/disable`, {name: 'Kiwi'}, kiwi);
-    assert.equal(resp.status, 401);
+      // Then chimpy misbehaves. So, kiwi tries to ban chimpy...
+      resp = await axios.post(`${homeUrl}/api/users/${chimpyId}/disable`, { name: 'Kiwi' }, kiwi);
+      assert.equal(resp.status, 401);
 
-    // ... but it doesn't work!
-    resp = await axios.get(`${homeUrl}/api/docs/${did}`, chimpy);
-    assert.equal(resp.status, 200);
+      // ... but it doesn't work!
+      resp = await axios.get(`${homeUrl}/api/docs/${did}`, chimpy);
+      assert.equal(resp.status, 200);
 
-    // Since kiwi doesn't have permission to ban chimpy, large ham steps in with the banHAMmer
-    resp = await axios.post(`${homeUrl}/api/users/${chimpyId}/disable`, {name: 'Ham'}, ham);
-    assert.equal(resp.status, 200);
+      // Since kiwi doesn't have permission to ban chimpy, large ham steps in with the banHAMmer
+      resp = await axios.post(`${homeUrl}/api/users/${chimpyId}/disable`, { name: 'Ham' }, ham);
+      assert.equal(resp.status, 204);
 
-    // Poor chimpy now really is banned
-    resp = await axios.get(`${homeUrl}/api/docs/${did}`, chimpy);
-    assert.equal(resp.status, 403);
+      // Poor chimpy now really is banned
+      resp = await axios.get(`${homeUrl}/api/docs/${did}`, chimpy);
+      assert.equal(resp.status, 403);
 
-    // Chimpy learns their lesson but kiwi can't let them back in
-    resp = await axios.post(`${homeUrl}/api/users/${chimpyId}/enable`, {name: 'Kiwi'}, kiwi);
-    assert.equal(resp.status, 401);
+      // Chimpy learns their lesson but kiwi can't let them back in
+      resp = await axios.post(`${homeUrl}/api/users/${chimpyId}/enable`, { name: 'Kiwi' }, kiwi);
+      assert.equal(resp.status, 401);
 
-    // So ham has to give chimpy a second chance
-    resp = await axios.post(`${homeUrl}/api/users/${chimpyId}/enable`, {name: 'Ham'}, ham);
-    assert.equal(resp.status, 200);
+      // So ham has to give chimpy a second chance
+      resp = await axios.post(`${homeUrl}/api/users/${chimpyId}/enable`, { name: 'Ham' }, ham);
+      assert.equal(resp.status, 204);
 
-    // Welcome back chimpy, we're all friends again
-    resp = await axios.get(`${homeUrl}/api/docs/${did}`, chimpy);
-    assert.equal(resp.status, 200);
+      // Welcome back chimpy, we're all friends again
+      resp = await axios.get(`${homeUrl}/api/docs/${did}`, chimpy);
+      assert.equal(resp.status, 200);
+    } finally {
+      chimpyUser.disabledAt = null;
+      await chimpyUser.save();
+    }
   });
 
   // Unauthorized folks can currently check if a document uuid exists and that's ok,
