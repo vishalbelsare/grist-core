@@ -201,7 +201,8 @@ describe('ApiServer', function() {
           id: await dbManager.testGetId('Chimpy'),
           ref: await dbManager.testGetRef('Chimpy'),
           name: 'Chimpy',
-          picture: null
+          picture: null,
+          disabledAt: null,
         }
       }
     );
@@ -261,7 +262,8 @@ describe('ApiServer', function() {
           id: await dbManager.testGetId('Chimpy'),
           ref: await dbManager.testGetRef('Chimpy'),
           name: 'Chimpy',
-          picture: null
+          picture: null,
+          disabledAt: null,
         }
       }
     );
@@ -553,6 +555,7 @@ describe('ApiServer', function() {
         email: chimpyEmail,
         ref: chimpyRef,
         picture: null,
+        disabledAt: null,
         access: "owners",
         isMember: true,
       }, {
@@ -561,6 +564,7 @@ describe('ApiServer', function() {
         email: kiwiEmail,
         ref: kiwiRef,
         picture: null,
+        disabledAt: null,
         access: "guests",
         isMember: false,
       }, {
@@ -569,6 +573,7 @@ describe('ApiServer', function() {
         email: charonEmail,
         ref: charonRef,
         picture: null,
+        disabledAt: null,
         access: "viewers",
         isMember: true,
       }]
@@ -597,6 +602,7 @@ describe('ApiServer', function() {
         email: chimpyEmail,
         ref: chimpyRef,
         picture: null,
+        disabledAt: null,
         access: "owners",
         isMember: true,
       }, {
@@ -605,6 +611,7 @@ describe('ApiServer', function() {
         email: charonEmail,
         ref: charonRef,
         picture: null,
+        disabledAt: null,
         access: "viewers",
         isMember: true,
       }]
@@ -669,6 +676,7 @@ describe('ApiServer', function() {
         email: chimpyEmail,
         ref: chimpyRef,
         picture: null,
+        disabledAt: null,
         access: "owners",
         isMember: true,
       }, {
@@ -677,6 +685,7 @@ describe('ApiServer', function() {
         email: kiwiEmail,
         ref: kiwiRef,
         picture: null,
+        disabledAt: null,
         access: "guests",
         isMember: false,
       }, {
@@ -685,6 +694,7 @@ describe('ApiServer', function() {
         email: charonEmail,
         ref: charonRef,
         picture: null,
+        disabledAt: null,
         access: "viewers",
         isMember: true,
       }]
@@ -720,6 +730,7 @@ describe('ApiServer', function() {
         email: chimpyEmail,
         ref: chimpyRef,
         picture: null,
+        disabledAt: null,
         access: "owners",
         isMember: true,
       }, {
@@ -728,6 +739,7 @@ describe('ApiServer', function() {
         email: kiwiEmail,
         ref: kiwiRef,
         picture: null,
+        disabledAt: null,
         access: "guests",
         isMember: false,
       }, {
@@ -736,6 +748,7 @@ describe('ApiServer', function() {
         email: charonEmail,
         ref: charonRef,
         picture: null,
+        disabledAt: null,
         access: "viewers",
         isMember: true,
       }]
@@ -767,6 +780,7 @@ describe('ApiServer', function() {
         email: chimpyEmail,
         ref: chimpyRef,
         picture: null,
+        disabledAt: null,
         access: "owners",
         isMember: true,
       }, {
@@ -775,6 +789,7 @@ describe('ApiServer', function() {
         email: charonEmail,
         ref: charonRef,
         picture: null,
+        disabledAt: null,
         access: "viewers",
         isMember: true,
       }]
@@ -1389,6 +1404,7 @@ describe('ApiServer', function() {
         email: chimpyEmail,
         ref: chimpyRef,
         picture: null,
+        disabledAt: null,
         access: 'guests',
         parentAccess: "owners",
         isMember: true,
@@ -1398,6 +1414,7 @@ describe('ApiServer', function() {
         email: kiwiEmail,
         ref: kiwiRef,
         picture: null,
+        disabledAt: null,
         access: "guests",
         parentAccess: null,
         isMember: false,
@@ -1408,6 +1425,7 @@ describe('ApiServer', function() {
         email: charonEmail,
         ref: charonRef,
         picture: null,
+        disabledAt: null,
         access: null,
         parentAccess: null,
         isMember: false,
@@ -1427,6 +1445,7 @@ describe('ApiServer', function() {
         email: chimpyEmail,
         ref: chimpyRef,
         picture: null,
+        disabledAt: null,
         access: "owners",
         isMember: true,
       }, {
@@ -1435,6 +1454,7 @@ describe('ApiServer', function() {
         email: kiwiEmail,
         ref: kiwiRef,
         picture: null,
+        disabledAt: null,
         access: "guests",
         isMember: false,
       }, {
@@ -1443,6 +1463,7 @@ describe('ApiServer', function() {
         email: charonEmail,
         ref: charonRef,
         picture: null,
+        disabledAt: null,
         access: "guests",
         isMember: false,
       }]
@@ -1472,6 +1493,7 @@ describe('ApiServer', function() {
         email: chimpyEmail,
         ref: chimpyRef,
         picture: null,
+        disabledAt: null,
         access: 'guests',
         parentAccess: "owners",
         isMember: true,
@@ -1482,6 +1504,7 @@ describe('ApiServer', function() {
         ref: charonRef,
         name: "Charon",
         picture: null,
+        disabledAt: null,
         access: null,
         parentAccess: null,
         isMember: false,
@@ -1498,6 +1521,7 @@ describe('ApiServer', function() {
         email: chimpyEmail,
         ref: chimpyRef,
         picture: null,
+        disabledAt: null,
         access: "owners",
         isMember: true,
       }, {
@@ -1506,6 +1530,7 @@ describe('ApiServer', function() {
         email: charonEmail,
         ref: charonRef,
         picture: null,
+        disabledAt: null,
         access: "guests",
         isMember: false,
       }]
@@ -1886,6 +1911,7 @@ describe('ApiServer', function() {
         email: chimpyEmail,
         ref: chimpyRef,
         picture: null,
+        disabledAt: null,
         access: "owners",  // Chimpy's access is explicit since he is the owner who set access.
         parentAccess: "owners",
         isMember: true,
@@ -1895,6 +1921,7 @@ describe('ApiServer', function() {
         email: kiwiEmail,
         ref: kiwiRef,
         picture: null,
+        disabledAt: null,
         access: null,
         parentAccess: "editors",
         isMember: true,
@@ -1904,6 +1931,7 @@ describe('ApiServer', function() {
         email: charonEmail,
         ref: charonRef,
         picture: null,
+        disabledAt: null,
         access: null,
         parentAccess: "viewers",
         isMember: true,
@@ -1936,6 +1964,7 @@ describe('ApiServer', function() {
         email: chimpyEmail,
         ref: chimpyRef,
         picture: null,
+        disabledAt: null,
         access: 'owners',
         parentAccess: 'owners',
         isMember: true,
@@ -1945,6 +1974,7 @@ describe('ApiServer', function() {
         email: kiwiEmail,
         ref: kiwiRef,
         picture: null,
+        disabledAt: null,
         access: null,
         parentAccess: 'editors',
         isMember: true,
@@ -1954,6 +1984,7 @@ describe('ApiServer', function() {
         email: charonEmail,
         ref: charonRef,
         picture: null,
+        disabledAt: null,
         access: 'editors',
         parentAccess: 'viewers',
         isMember: true,
@@ -2036,6 +2067,7 @@ describe('ApiServer', function() {
       ref: chimpyRef,
       name: "Chimpy",
       picture: null,
+      disabledAt: null,
       allowGoogleLogin: true,
     });
   });

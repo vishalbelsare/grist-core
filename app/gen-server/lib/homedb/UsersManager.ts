@@ -202,6 +202,7 @@ export class UsersManager {
       locale: user.options?.locale,
       prefs: user.prefs?.find((p)=> p.orgId === null)?.prefs,
       firstLoginAt: user.firstLoginAt || null,
+      disabledAt: user.disabledAt,
     };
     if (user.firstLoginAt) {
       result.firstLoginAt = user.firstLoginAt;
