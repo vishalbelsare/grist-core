@@ -500,24 +500,23 @@ export class ApiServer {
       res.sendStatus(200);
     }));
 
-    this._app.post('/api/users/:userId/disable', expressWrap(async (req, res) => {
+    async function changeUserDisabledDate(req: express.Request, disabledAt: Date|null) {
       const isAuthorized = await this._gristServer.getInstallAdmin().isAdminReq(req);
       if (!isAuthorized) {
-        throw new ApiError('Only admin users can disable users', 401);
+        throw new ApiError('Only admin users can disable or re-enable users', 401);
       }
       const targetUserId = integerParam(req.params.userId, 'userId');
-      await this._dbManager.updateUser(targetUserId, {disabledAt: new Date()});
-      res.sendStatus(200);
+      await this._dbManager.updateUser(targetUserId, {disabledAt});
+    }
+    
+    this._app.post('/api/users/:userId/disable', expressWrap(async (req, res) => {
+      await changeUserDisabledDate(req, new Date());
+      res.sendStatus(204);
     }));
 
     this._app.post('/api/users/:userId/enable', expressWrap(async (req, res) => {
-      const isAuthorized = await this._gristServer.getInstallAdmin().isAdminReq(req);
-      if (!isAuthorized) {
-        throw new ApiError('Only admin users can enable users', 401);
-      }
-      const targetUserId = integerParam(req.params.userId, 'userId');
-      await this._dbManager.updateUser(targetUserId, {disabledAt: null});
-      res.sendStatus(200);
+      await changeUserDisabledDate(req, null);
+      res.sendStatus(204);
     }));
 
     // GET /api/profile/apikey
