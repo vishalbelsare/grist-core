@@ -279,7 +279,6 @@ describe('removedAt', function() {
             "access": "owners",
             "parentAccess": "owners",
             "isMember": true,
-            "disabledAt": null,
           },
           {
             "id": 2,
@@ -290,7 +289,6 @@ describe('removedAt', function() {
             "access": "guests",
             "parentAccess": null,
             "isMember": false,
-            "disabledAt": null,
           },
           {
             "id": idTest1,
@@ -301,7 +299,6 @@ describe('removedAt', function() {
             "access": "guests",
             "parentAccess": null,
             "isMember": false,
-            "disabledAt": null,
           },
           {
             "id": idTest2,
@@ -312,7 +309,6 @@ describe('removedAt', function() {
             "access": "guests",
             "parentAccess": null,
             "isMember": false,
-            "disabledAt": null,
           },
           {
             "id": idTest3,
@@ -323,7 +319,6 @@ describe('removedAt', function() {
             "access": "guests",
             "parentAccess": null,
             "isMember": false,
-            "disabledAt": null,
           }
         ]
       });
@@ -342,7 +337,6 @@ describe('removedAt', function() {
             "access": "owners",
             "parentAccess": "owners",
             "isMember": true,
-            "disabledAt": null,
           },
           {
             "id": 2,
@@ -353,7 +347,6 @@ describe('removedAt', function() {
             "access": "guests",
             "parentAccess": null,
             "isMember": false,
-            "disabledAt": null,
           }
         ]
       });

@@ -256,7 +256,6 @@ describe('UsersManager', function () {
         extra: {
           extrafield: 'randomvalue'
         },
-        disabledAt: null,
       };
     }
 
@@ -448,7 +447,6 @@ describe('UsersManager', function () {
             prefWithOrg,
             prefWithoutOrg
           ],
-          disabledAt: null,
         });
       }
 
@@ -467,7 +465,6 @@ describe('UsersManager', function () {
           locale: someUserLocale,
           prefs: prefWithoutOrg.prefs,
           firstLoginAt: null,
-          disabledAt: null,
         });
       });
 

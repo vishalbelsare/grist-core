@@ -268,7 +268,6 @@ describe('ApiServerAccess', function() {
         picture: null,
         access: "owners",
         isMember: true,
-        disabledAt: null,
       }, {
         id: 2,
         name: 'Kiwi',
@@ -277,7 +276,6 @@ describe('ApiServerAccess', function() {
         picture: null,
         access: "editors",
         isMember: true,
-        disabledAt: null,
       }, {
         id: 3,
         name: 'Charon',
@@ -286,7 +284,6 @@ describe('ApiServerAccess', function() {
         picture: null,
         access: "guests",
         isMember: false,
-        disabledAt: null,
       }]
     });
     // Revoke Kiwi's access to NASA.
@@ -314,7 +311,6 @@ describe('ApiServerAccess', function() {
         picture: null,
         access: "owners",
         isMember: true,
-        disabledAt: null,
       }, {
         id: 3,
         name: 'Charon',
@@ -323,7 +319,6 @@ describe('ApiServerAccess', function() {
         picture: null,
         access: "guests",
         isMember: false,
-        disabledAt: null,
       }]
     });
   });
@@ -1187,7 +1182,6 @@ describe('ApiServerAccess', function() {
         picture: null,
         access: "owners",
         isMember: true,
-        disabledAt: null,
       }, {
         id: 3,
         name: 'Charon',
@@ -1196,7 +1190,6 @@ describe('ApiServerAccess', function() {
         picture: null,
         access: "viewers",
         isMember: true,
-        disabledAt: null,
       }]
     });
   });
@@ -1229,7 +1222,6 @@ describe('ApiServerAccess', function() {
         access: null,
         parentAccess: "owners",
         isMember: true,
-        disabledAt: null,
       }, {
         id: 3,
         name: 'Charon',
@@ -1239,7 +1231,6 @@ describe('ApiServerAccess', function() {
         access: null,
         parentAccess: "viewers",
         isMember: true,
-        disabledAt: null,
       }]
     });
     // Run a complex case by modifying maxInheritedRole and individual roles on the workspace,
@@ -1274,7 +1265,6 @@ describe('ApiServerAccess', function() {
         access: "owners",
         parentAccess: "owners",
         isMember: true,
-        disabledAt: null,
       }, {
         id: 2,
         name: 'Kiwi',
@@ -1284,7 +1274,6 @@ describe('ApiServerAccess', function() {
         access: "editors",
         parentAccess: null,
         isMember: true,
-        disabledAt: null,
       }, {
         id: 3,
         name: 'Charon',
@@ -1294,7 +1283,6 @@ describe('ApiServerAccess', function() {
         access: null,
         parentAccess: "viewers",
         isMember: true,
-        disabledAt: null,
       }]
     });
 
@@ -1358,7 +1346,6 @@ describe('ApiServerAccess', function() {
         access: "owners",
         parentAccess: "owners",
         isMember: true,
-        disabledAt: null,
       }, {
         id: 2,
         name: 'Kiwi',
@@ -1368,7 +1355,6 @@ describe('ApiServerAccess', function() {
         access: "guests",
         parentAccess: null,
         isMember: true,
-        disabledAt: null,
       }, {
         id: 3,
         name: 'Charon',
@@ -1378,7 +1364,6 @@ describe('ApiServerAccess', function() {
         access: null,
         parentAccess: "viewers",
         isMember: true,
-        disabledAt: null,
       }]
     });
 
@@ -1400,7 +1385,6 @@ describe('ApiServerAccess', function() {
         access: "owners",
         parentAccess: "owners",
         isMember: true,
-        disabledAt: null,
       }, {
         id: 2,
         name: "Kiwi",
@@ -1410,7 +1394,6 @@ describe('ApiServerAccess', function() {
         access: null,
         parentAccess: null,
         isMember: true,
-        disabledAt: null,
       }, {
         id: 3,
         name: 'Charon',
@@ -1420,7 +1403,6 @@ describe('ApiServerAccess', function() {
         access: null,
         parentAccess: "viewers",
         isMember: true,
-        disabledAt: null,
       }]
     });
 
@@ -1462,7 +1444,6 @@ describe('ApiServerAccess', function() {
         access: "owners",
         parentAccess: "owners",
         isMember: true,
-        disabledAt: null,
       }, {
         id: 3,
         name: 'Charon',
@@ -1472,7 +1453,6 @@ describe('ApiServerAccess', function() {
         access: null,
         parentAccess: "viewers",
         isMember: true,
-        disabledAt: null,
       }]
     });
 
@@ -1505,7 +1485,6 @@ describe('ApiServerAccess', function() {
         access: "owners",
         parentAccess: "owners",
         isMember: true,
-        disabledAt: null,
       }, {
         id: 2,
         name: 'Kiwi',
@@ -1515,7 +1494,6 @@ describe('ApiServerAccess', function() {
         access: "editors",
         parentAccess: null,
         isMember: true,
-        disabledAt: null,
       }, {
         id: 3,
         name: 'Charon',
@@ -1525,7 +1503,6 @@ describe('ApiServerAccess', function() {
         access: null,
         parentAccess: "viewers",
         isMember: true,
-        disabledAt: null,
       }]
     });
     // Reset the access settings
@@ -1570,7 +1547,6 @@ describe('ApiServerAccess', function() {
         access: null,
         parentAccess: "owners",
         isMember: true,
-        disabledAt: null,
       }, {
         id: 2,
         name: 'Kiwi',
@@ -1580,7 +1556,6 @@ describe('ApiServerAccess', function() {
         access: null,
         parentAccess: "viewers",
         isMember: true,
-        disabledAt: null,
       }, {
         id: 3,
         name: 'Charon',
@@ -1590,7 +1565,6 @@ describe('ApiServerAccess', function() {
         access: null,
         parentAccess: "viewers",
         isMember: true,
-        disabledAt: null,
       }]
     });
     // Reset the access settings
@@ -1999,7 +1973,6 @@ describe('ApiServerAccess', function() {
         access: "owners",
         parentAccess: "owners",
         isMember: true,
-        disabledAt: null,
       }, {
         id: 2,
         name: 'Kiwi',
@@ -2009,7 +1982,6 @@ describe('ApiServerAccess', function() {
         access: null,
         parentAccess: null,
         isMember: true,
-        disabledAt: null,
       }, {
         id: 3,
         name: 'Charon',
@@ -2019,7 +1991,6 @@ describe('ApiServerAccess', function() {
         access: null,
         parentAccess: "viewers",
         isMember: true,
-        disabledAt: null,
       }]
     });
 
@@ -2035,7 +2006,6 @@ describe('ApiServerAccess', function() {
         picture: null,
         access: "owners",
         isMember: true,
-        disabledAt: null,
       }, {
         id: 2,
         name: 'Kiwi',
@@ -2044,7 +2014,6 @@ describe('ApiServerAccess', function() {
         picture: null,
         access: "members",
         isMember: true,
-        disabledAt: null,
       }, {
         id: 3,
         name: 'Charon',
@@ -2053,7 +2022,6 @@ describe('ApiServerAccess', function() {
         picture: null,
         access: "viewers",
         isMember: true,
-        disabledAt: null,
       }]
     });
 

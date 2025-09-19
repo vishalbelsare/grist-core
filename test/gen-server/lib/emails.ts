@@ -34,7 +34,7 @@ describe('emails', function() {
     let resp = await axios.get(`${serverUrl}/o/nasa/api/profile/user`, cookie);
     assert.equal(resp.status, 200);
     assert.deepEqual(resp.data, {
-      id: 1, email: regular, name: "Chimpy", ref: userRef, picture: null, allowGoogleLogin: true, disabledAt: null,
+      id: 1, email: regular, name: "Chimpy", ref: userRef, picture: null, allowGoogleLogin: true,
     });
 
     // now we log in with simulated provider giving a Chimpy@ capitalization.
@@ -50,7 +50,6 @@ describe('emails', function() {
       ref: userRef,
       picture: null,
       allowGoogleLogin: true,
-      disabledAt: null,
     });
 
     // read our profile with api key (no session involved) and make sure result is the same.
@@ -64,7 +63,6 @@ describe('emails', function() {
       ref: userRef,
       picture: null,
       allowGoogleLogin: true,
-      disabledAt: null,
     });
 
   });
@@ -125,7 +123,6 @@ describe('emails', function() {
         picture: null,
         access: 'owners',
         isMember: true,
-        disabledAt: null,
       },
       {
         id: 3,
@@ -135,7 +132,6 @@ describe('emails', function() {
         picture: null,
         access: 'guests',
         isMember: false,
-        disabledAt: null,
       },
     ]});
 
@@ -161,7 +157,6 @@ describe('emails', function() {
         picture: null,
         access: 'owners',
         isMember: true,
-        disabledAt: null,
       },
       {
         id: 2,
@@ -171,7 +166,6 @@ describe('emails', function() {
         picture: null,
         access: 'editors',
         isMember: true,
-        disabledAt: null,
       },
     ]});
   });

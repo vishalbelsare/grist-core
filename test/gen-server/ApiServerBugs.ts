@@ -71,7 +71,6 @@ describe('ApiServerBugs', function() {
         parentAccess: "owners",
         access: "owners",
         isMember: true,
-        disabledAt: null,
       }, {
         id: 2,
         name: 'Kiwi',
@@ -81,7 +80,6 @@ describe('ApiServerBugs', function() {
         parentAccess: "editors",
         access: "editors",
         isMember: true,
-        disabledAt: null,
       }, {
         id: 3,
         name: 'Charon',
@@ -91,7 +89,6 @@ describe('ApiServerBugs', function() {
         parentAccess: "viewers",
         access: "viewers",
         isMember: true,
-        disabledAt: null,
       }]
     });
 
@@ -117,7 +114,6 @@ describe('ApiServerBugs', function() {
         picture: null,
         access: "owners",
         isMember: true,
-        disabledAt: null,
       }, {
         id: 2,
         name: 'Kiwi',
@@ -126,7 +122,6 @@ describe('ApiServerBugs', function() {
         picture: null,
         access: "editors",
         isMember: true,
-        disabledAt: null,
       }]
     });
 
