@@ -392,8 +392,20 @@ export async function addRequestUser(
     }
   }
 
-  if (mreq.user?.disabledAt) {
-    return res.status(403).send('Forbidden');
+  // Disabled users get no rights, not even public pages. Almost
+  // everything is forbidden once you've been disabled. You'll have to
+  // log out to see resources available to the anonymous user...
+  if (mreq.user?.disabledAt
+    // ... with one little exception.
+    //
+    // In order to let the user know that they're logged in and to let
+    // them log out, we'll grant them access to these two endpoints.
+    // Otherwise the 403 error page on the client side can't get an
+    // active user and thinks the user isn't logged in at all, which
+    // can be more confusing than necessary.
+    && !(['/session/access/active', '/session/access/all'].includes(mreq.url))
+  ) {
+    throw new ApiError('Forbidden', 403);
   }
 
   // If no userId has been found yet fall back on anonymous.
