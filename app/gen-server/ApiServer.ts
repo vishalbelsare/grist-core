@@ -504,12 +504,12 @@ export class ApiServer {
 
     this._app.post('/api/users/:userId/disable', requireInstallAdmin, expressWrap(async (req, res) => {
       await this._changeUserDisabledDate(req, new Date());
-      sendOkReply(req, res);
+      await sendOkReply(req, res);
     }));
 
     this._app.post('/api/users/:userId/enable', requireInstallAdmin, expressWrap(async (req, res) => {
       await this._changeUserDisabledDate(req, null);
-      sendOkReply(req, res);
+      await sendOkReply(req, res);
     }));
 
     // GET /api/profile/apikey

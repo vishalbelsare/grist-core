@@ -1101,7 +1101,7 @@ describe('ApiServer', function() {
 
       // Then chimpy misbehaves. So, kiwi tries to ban chimpy...
       resp = await axios.post(`${homeUrl}/api/users/${chimpyId}/disable`, { name: 'Kiwi' }, kiwi);
-      assert.equal(resp.status, 401);
+      assert.equal(resp.status, 403);
 
       // ... but it doesn't work!
       resp = await axios.get(`${homeUrl}/api/docs/${did}`, chimpy);
@@ -1117,7 +1117,7 @@ describe('ApiServer', function() {
 
       // Chimpy learns their lesson but kiwi can't let them back in
       resp = await axios.post(`${homeUrl}/api/users/${chimpyId}/enable`, { name: 'Kiwi' }, kiwi);
-      assert.equal(resp.status, 401);
+      assert.equal(resp.status, 403);
 
       // So ham has to give chimpy a second chance
       resp = await axios.post(`${homeUrl}/api/users/${chimpyId}/enable`, { name: 'Ham' }, ham);
