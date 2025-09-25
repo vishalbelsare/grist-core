@@ -2237,6 +2237,21 @@ describe('ApiServerAccess', function() {
       assert.equal(resp.status, 200);
       assert.deepEqual(resp.data.map((org: any) => org.name),
                                      ['Kiwiland', 'Fish', 'Flightless', 'Primately']);
+
+      // Check that a disabled user cannot use an api key
+      const sadKiwi = await dbManager.getUserByLogin('kiwi@getgrist.com');
+      sadKiwi.disabledAt = new Date();
+      await sadKiwi.save();
+
+      resp = await axios.get(`${homeUrl}/api/orgs`, kiwi);
+      assert.equal(resp.status, 403);
+
+      // Just kidding, kiwi, you are allowed back in
+      sadKiwi.disabledAt = null;
+      await sadKiwi.save();
+
+      resp = await axios.get(`${homeUrl}/api/orgs`, kiwi);
+      assert.equal(resp.status, 200);
     });
 
     describe('force flag is not needed if apiKey is not set', function() {
