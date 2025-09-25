@@ -298,6 +298,10 @@ describe('Authorizer', function() {
     let resp = await axios.get(`${serverUrl}/o/pr/${docId}`, chimpy);
     assert.equal(resp.status, 200, 'bananas first acquired');
 
+    // A non-document request is fine too.
+    resp = await axios.get(`${serverUrl}/`, chimpy);
+    assert.equal(resp.status, 200, 'home page visible');
+
     const sadChimpy = await dbManager.getUserByLogin('chimpy@getgrist.com');
     try {
       // But, oh no! Chimpy has been getting too greedy with the bananas,
@@ -308,6 +312,10 @@ describe('Authorizer', function() {
       // No more bananas!
       resp = await axios.get(`${serverUrl}/o/pr/${docId}`, chimpy);
       assert.equal(resp.status, 403, 'bananas denied!');
+
+      // Not even the home page is allowed!
+      resp = await axios.get(`${serverUrl}/`, chimpy);
+      assert.equal(resp.status, 403, 'home page denied!');
     } finally {
       // It's okay, chimpy, you learned your lesson
       sadChimpy.disabledAt = null;
@@ -317,6 +325,10 @@ describe('Authorizer', function() {
     // You can have your bananas back
     resp = await axios.get(`${serverUrl}/o/pr/${docId}`, chimpy);
     assert.equal(resp.status, 200, 'bananas granted again');
+
+    // You can also look at stuff outside of a document.
+    resp = await axios.get(`${serverUrl}/`, chimpy);
+    assert.equal(resp.status, 200, 'home page visible again');
   });
 
   it("can set user via GRIST_PROXY_AUTH_HEADER", async function() {

@@ -1483,6 +1483,9 @@ describe('GranularAccess', function() {
       'applyUserActions', 0, [['RemoveRecord', 'Data', 1]]
     ));
 
+    // Not even openDoc should work
+    assertResponseDenied(await cliEditor.send('openDoc', docId));
+
     // Admin restores the editor
     await admin.enableUser(editorProfile.id);
     home.dbManager.flushDocAuthCache();
@@ -1505,6 +1508,9 @@ describe('GranularAccess', function() {
     assertResponsePasses(await cliEditor.send(
       'applyUserActions', 0, [['RemoveRecord', 'Data', 1]]
     ));
+
+    // Including calling openDoc
+    assertResponsePasses(await cliEditor.send('openDoc', docId));
   });
 
   it('respects row-level access control', async function() {
