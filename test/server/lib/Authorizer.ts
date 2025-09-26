@@ -344,7 +344,7 @@ describe('Authorizer', function() {
     process.env.GRIST_PROXY_AUTH_HEADER = 'X-email';
     process.env.GRIST_IGNORE_SESSION = 'true';
     // We'll need a local setup for this test
-    let localServer = new FlexServer(0, 'test docWorker');
+    const localServer = new FlexServer(0, 'test docWorker');
     await activateServer(localServer, docTools.getDocManager());
 
     // User can access a doc by setting header.
@@ -391,5 +391,5 @@ async function getChimpyCookie() {
     ... await session.getCookieLogin(
       'pr', { email: 'chimpy@getgrist.com', name: 'Chimpy' }
     ),
-  }
+  };
 }
