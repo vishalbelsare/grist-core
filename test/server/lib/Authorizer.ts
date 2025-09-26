@@ -1,3 +1,4 @@
+import {TestSession} from 'test/gen-server/apiUtils';
 import {parseUrlId} from 'app/common/gristUrls';
 import {HomeDBManager} from 'app/gen-server/lib/homedb/HomeDBManager';
 import {DocManager} from 'app/server/lib/DocManager';
@@ -291,45 +292,51 @@ describe('Authorizer', function() {
     assert.equal(parts.forkUserId, undefined);
   });
 
-  it("prevents disabled users from logging in", async function () {
-    const docId = docs.Bananas.id;
+  for (const {method, getAuth} of [
+    { method: 'API key', getAuth: async () => chimpy },
+    { method: 'session cookie', getAuth: getChimpyCookie },
+  ]) {
+    it(`forbids access to disabled users via ${method}`, async function () {
+      const auth = await getAuth();
+      const docId = docs.Bananas.id;
 
-    // At first, Chimpy can get the bananas
-    let resp = await axios.get(`${serverUrl}/o/pr/${docId}`, chimpy);
-    assert.equal(resp.status, 200, 'bananas first acquired');
+      // At first, Chimpy can get the bananas
+      let resp = await axios.get(`${serverUrl}/o/pr/${docId}`, auth);
+      assert.equal(resp.status, 200, 'bananas first acquired');
 
-    // A non-document request is fine too.
-    resp = await axios.get(`${serverUrl}/`, chimpy);
-    assert.equal(resp.status, 200, 'home page visible');
+      // A non-document request is fine too.
+      resp = await axios.get(`${serverUrl}/`, auth);
+      assert.equal(resp.status, 200, 'home page visible');
 
-    const sadChimpy = await dbManager.getUserByLogin('chimpy@getgrist.com');
-    try {
-      // But, oh no! Chimpy has been getting too greedy with the bananas,
-      // so down comes the banhammer!
-      sadChimpy.disabledAt = new Date();
-      await sadChimpy.save();
+      const sadChimpy = await dbManager.getUserByLogin('chimpy@getgrist.com');
+      try {
+        // But, oh no! Chimpy has been getting too greedy with the bananas,
+        // so down comes the banhammer!
+        sadChimpy.disabledAt = new Date();
+        await sadChimpy.save();
 
-      // No more bananas!
-      resp = await axios.get(`${serverUrl}/o/pr/${docId}`, chimpy);
-      assert.equal(resp.status, 403, 'bananas denied!');
+        // No more bananas!
+        resp = await axios.get(`${serverUrl}/o/pr/${docId}`, auth);
+        assert.equal(resp.status, 403, 'bananas denied!');
 
-      // Not even the home page is allowed!
-      resp = await axios.get(`${serverUrl}/`, chimpy);
-      assert.equal(resp.status, 403, 'home page denied!');
-    } finally {
-      // It's okay, chimpy, you learned your lesson
-      sadChimpy.disabledAt = null;
-      await sadChimpy.save();
-    }
+        // Not even the home page is allowed!
+        resp = await axios.get(`${serverUrl}/`, auth);
+        assert.equal(resp.status, 403, 'home page denied!');
+      } finally {
+        // It's okay, chimpy, you learned your lesson
+        sadChimpy.disabledAt = null;
+        await sadChimpy.save();
+      }
 
-    // You can have your bananas back
-    resp = await axios.get(`${serverUrl}/o/pr/${docId}`, chimpy);
-    assert.equal(resp.status, 200, 'bananas granted again');
+      // You can have your bananas back
+      resp = await axios.get(`${serverUrl}/o/pr/${docId}`, auth);
+      assert.equal(resp.status, 200, 'bananas granted again');
 
-    // You can also look at stuff outside of a document.
-    resp = await axios.get(`${serverUrl}/`, chimpy);
-    assert.equal(resp.status, 200, 'home page visible again');
-  });
+      // You can also look at stuff outside of a document.
+      resp = await axios.get(`${serverUrl}/`, auth);
+      assert.equal(resp.status, 200, 'home page visible again');
+    });
+  }
 
   it("can set user via GRIST_PROXY_AUTH_HEADER", async function() {
     // GRIST_PROXY_AUTH_HEADER now only affects requests directly when GRIST_IGNORE_SESSION is
@@ -376,4 +383,13 @@ describe('Authorizer', function() {
 
 function withoutTimestamp(txt: string): string {
   return txt.replace(/"timestampMs":[ 0-9]+/, '"timestampMs": NNNN');
+}
+
+async function getChimpyCookie() {
+  const session = new TestSession(server);
+  return {
+    ... await session.getCookieLogin(
+      'pr', { email: 'chimpy@getgrist.com', name: 'Chimpy' }
+    ),
+  }
 }
